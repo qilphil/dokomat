@@ -1,5 +1,7 @@
 package de.punktat.android.dokomat2;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,11 +15,21 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.punktat.android.dokomat2.data.AppDatabase;
+import de.punktat.android.dokomat2.data.PartieDao;
+
 public class PartieListeActivity extends AppCompatActivity implements AddPartieFragment.OnFragmentInteractionListener {
+
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        mDb = AppDatabase.get(getApplicationContext());
+        mDb.partieDao().findAllNewestLD();
+
         setContentView(R.layout.activity_partie_liste);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,6 +45,11 @@ public class PartieListeActivity extends AppCompatActivity implements AddPartieF
                 ReplaceMainFragment(new AddPartieFragment());
             }
         });
+    }
+
+    private void initData() {
+        PartieDao pd = mDb.partieDao();
+
     }
 
     private void ReplaceMainFragment(Fragment repFragment) {

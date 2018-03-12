@@ -44,6 +44,19 @@ public class Partie {
         this.startTime = startTime;
         this.location = location;
     }
+    @Ignore
+    public Partie(Date startTime, Date endTime, String location, int spielerAnzahl, int spieler1Id, int spieler2Id, int spieler3Id, int spieler4Id, String comment, Boolean finished) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.spielerAnzahl = spielerAnzahl;
+        this.spieler1Id = spieler1Id;
+        this.spieler2Id = spieler2Id;
+        this.spieler3Id = spieler3Id;
+        this.spieler4Id = spieler4Id;
+        this.comment = comment;
+        this.finished = finished;
+    }
 
     public Partie(int id, Date startTime, Date endTime, String location, int spielerAnzahl, int spieler1Id, int spieler2Id, int spieler3Id, int spieler4Id, String comment, Boolean finished) {
         this.id = id;
