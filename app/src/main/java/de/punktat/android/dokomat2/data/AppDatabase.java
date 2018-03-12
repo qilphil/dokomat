@@ -6,23 +6,16 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.format.DateUtils;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+
+import de.punktat.android.dokomat2.BasicApp;
+import de.punktat.android.dokomat2.threads.AppExecutors;
 
 
 @Database(entities = {Spieler.class, Spiel.class, Partie.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract SpielerDao spielerDao();
-
-    public abstract PartieDao partieDao();
-
-    public abstract SpielDao spielDao();
-
     private static AppDatabase sInstance;
 
     public synchronized static AppDatabase get(Context context) {
@@ -40,14 +33,23 @@ public abstract class AppDatabase extends RoomDatabase {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
-                        sInstance.preFillData(context);
+                        sInstance.preFillData();
                     }
                 }).build();
 
     }
 
+    public static AppDatabase getInstance(BasicApp basicApp, AppExecutors mAppExecutors) {
+        return sInstance;
+    }
 
-    private void preFillData(Context context) {
+    public abstract SpielerDao spielerDao();
+
+    public abstract PartieDao partieDao();
+
+    public abstract SpielDao spielDao();
+
+    private void preFillData() {
         SpielerDao sd = spielerDao();
         List<Spieler> checkList = sd.getAll();
         if (checkList.size() < 4) {
@@ -86,6 +88,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
 
     }
+
     private int GetNextPlayerId(List<Spieler> aSpieler,int off){
         Spieler selSPiel=aSpieler.get(off%aSpieler.size());
         return selSPiel.getId();

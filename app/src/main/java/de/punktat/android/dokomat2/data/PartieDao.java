@@ -9,8 +9,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import de.punktat.android.dokomat2.livedata.PartieListeData;
-
 @Dao
 public interface PartieDao {
     @Query("SELECT * FROM partie")
@@ -26,8 +24,6 @@ public interface PartieDao {
     @Query("SELECT * FROM partie ORDER BY start_time DESC")
     LiveData<List<Partie>> findAllNewestLD();
 
-    @Query("SELECT * FROM partie ORDER BY start_time DESC")
-    PartieListeData findAllNewestO();
 
     @Insert
     void insertAll(Partie... partien);

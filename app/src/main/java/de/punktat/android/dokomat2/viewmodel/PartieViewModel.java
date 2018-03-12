@@ -26,7 +26,7 @@ public class PartieViewModel extends ViewModel {
     }
 
     private void loadUsers(Context context) {
-        AppDatabase mDb=AppDatabase.ger(context);
+        AppDatabase mDb = AppDatabase.get(context);
         // Do an asyncronous operation to fetch users.
     }
 }
