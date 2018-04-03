@@ -27,7 +27,7 @@ public class PartieListeActivity extends AppCompatActivity implements AddPartieF
         super.onCreate(savedInstanceState);
 
 
-        mDb = AppDatabase.get(getApplicationContext());
+        mDb = AppDatabase.getInstance(getApplicationContext(),((BasicApp)getApplication()).getmAppExecutors());
         mDb.partieDao().findAllNewestLD();
 
         setContentView(R.layout.activity_partie_liste);

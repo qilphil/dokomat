@@ -27,6 +27,10 @@ import de.punktat.android.dokomat2.threads.AppExecutors;
  */
 public class BasicApp extends Application {
 
+    public AppExecutors getmAppExecutors() {
+        return mAppExecutors;
+    }
+
     private AppExecutors mAppExecutors;
 
     @Override
@@ -39,7 +43,9 @@ public class BasicApp extends Application {
     public AppDatabase getDatabase() {
         return AppDatabase.getInstance(this, mAppExecutors);
     }
-
+    public DataRepository getRepository() {
+        return DataRepository.getInstance(getDatabase());
+    }
     /*public DataRepository getRepository() {
         return DataRepository.getInstance(getDatabase());
     }*/

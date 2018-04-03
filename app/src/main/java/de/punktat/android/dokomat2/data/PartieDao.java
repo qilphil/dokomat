@@ -15,8 +15,12 @@ public interface PartieDao {
     List<Partie> getAll();
 
     @Query("SELECT * FROM partie WHERE id IN (:partieIds)")
-    List<Partie> loadAllByIds(int[] partieIds);
+    LiveData<List<Partie>> loadAllByIdsLD(int[] partieIds);
 
+    @Query("SELECT * FROM partie WHERE id IN (:partieIds)")
+    List<Partie> loadAllByIds(int[] partieIds);
+    @Query("SELECT * FROM partie WHERE id = :partieIds")
+    LiveData<Partie> loadById(int partieIds);
 
     @Query("SELECT * FROM partie ORDER BY start_time DESC")
     List<Partie> findAllNewestS();
