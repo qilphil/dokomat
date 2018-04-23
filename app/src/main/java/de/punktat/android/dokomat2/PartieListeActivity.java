@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,8 +32,7 @@ public class PartieListeActivity extends AppCompatActivity implements AddPartieF
         super.onCreate(savedInstanceState);
 
 
-        mDb = AppDatabase.getInstance(getApplicationContext(),((BasicApp)getApplication()).getmAppExecutors());
-        LiveData<List<Partie>> test= mDb.partieDao().findAllNewestLD();
+
 
         setContentView(R.layout.activity_partie_liste);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

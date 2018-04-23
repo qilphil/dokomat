@@ -5,8 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 public class Partie {
@@ -82,6 +87,16 @@ public class Partie {
 
     public Date getStartTime() {
         return startTime;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String getStartTimeString() {
+
+        DateFormat df = new SimpleDateFormat("dd.mm.yyyy HH:mm:ss");
+
+
+        return df.format(startTime);
     }
 
     public void setStartTime(Date startTime) {
