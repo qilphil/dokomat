@@ -1,5 +1,6 @@
 package de.punktat.android.dokomat2;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.net.Uri;
@@ -15,7 +16,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import de.punktat.android.dokomat2.data.AppDatabase;
+import de.punktat.android.dokomat2.data.Partie;
 import de.punktat.android.dokomat2.data.PartieDao;
 
 public class PartieListeActivity extends AppCompatActivity implements AddPartieFragment.OnFragmentInteractionListener {
@@ -28,7 +32,7 @@ public class PartieListeActivity extends AppCompatActivity implements AddPartieF
 
 
         mDb = AppDatabase.getInstance(getApplicationContext(),((BasicApp)getApplication()).getmAppExecutors());
-        mDb.partieDao().findAllNewestLD();
+        LiveData<List<Partie>> test= mDb.partieDao().findAllNewestLD();
 
         setContentView(R.layout.activity_partie_liste);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
