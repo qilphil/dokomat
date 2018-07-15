@@ -3,6 +3,7 @@ package de.punktat.android.dokomat2;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,12 +34,14 @@ public class PartieListeActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Activity myAct = getActivity();
-        mDb = AppDatabase.getInstance(myAct.getApplicationContext(), ((BasicApp) myAct.getApplication()).getmAppExecutors());
+        if (myAct != null) {
+            mDb = AppDatabase.getInstance(myAct.getApplicationContext(), ((BasicApp) myAct.getApplication()).getmAppExecutors());
+        }
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        FloatingActionButton fab = (FloatingActionButton) myAct.findViewById(R.id.fab);
+        FloatingActionButton fab = myAct.findViewById(R.id.fab);
         fab.show();
-        mRecyclerView = (RecyclerView) myAct.findViewById(R.id.my_recycler_view);
+        mRecyclerView = myAct.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -46,11 +49,8 @@ public class PartieListeActivityFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new PartieAdapter(new PartieClickCallback() {
-            @Override
-            public void onClick(Partie Partie) {
+        mAdapter = new PartieAdapter(Partie -> {
 
-            }
         });
 
         new AsyncTask<Void, Void, List<Partie>>() {
@@ -72,7 +72,7 @@ public class PartieListeActivityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_partie_liste, container, false);
     }

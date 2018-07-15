@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import java.util.Date;
 import java.util.List;
 
-import de.punktat.android.dokomat2.BasicApp;
 import de.punktat.android.dokomat2.threads.AppExecutors;
 
 
@@ -36,7 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             // Generate the data for pre-population
                             AppDatabase database = AppDatabase.getInstance(appContext, executors);
 
-                            sInstance.preFillData(database);
+                                    preFillData(database);
 
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated();
@@ -83,7 +82,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract SpielDao spielDao();
 
-    public static void preFillData(AppDatabase db) {
+    private static void preFillData(AppDatabase db) {
         SpielerDao sd = db.spielerDao();
         Spieler[] newSpieler = new Spieler[]{
                 new Spieler("Philipp", "Lutz", "Phil", "PL", "atpunkt@punktat.de", 'm'),
