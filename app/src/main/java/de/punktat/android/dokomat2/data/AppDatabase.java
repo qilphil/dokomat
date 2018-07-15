@@ -19,7 +19,7 @@ import de.punktat.android.dokomat2.threads.AppExecutors;
 @Database(entities = {Spieler.class, Spiel.class, Partie.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
-    public static final String DATABASE_NAME = "DokoMat";
+    private static final String DATABASE_NAME = "DokoMat2";
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
 
@@ -30,20 +30,17 @@ public abstract class AppDatabase extends RoomDatabase {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
-                        executors.diskIO().execute(new Runnable() {
-                                                       @Override
-                                                       public void run() {
-                                                           // Add a delay to simulate a long-running operation
-                                                           addDelay();
-                                                           // Generate the data for pre-population
-                                                           AppDatabase database = AppDatabase.getInstance(appContext, executors);
+                        executors.diskIO().execute(() -> {
+                            // Add a delay to simulate a long-running operation
+                            addDelay();
+                            // Generate the data for pre-population
+                            AppDatabase database = AppDatabase.getInstance(appContext, executors);
 
-                                                           sInstance.preFillData(database);
+                            sInstance.preFillData(database);
 
-                                                           // notify that the database was created and it's ready to be used
-                                                           database.setDatabaseCreated();
-                                                       }
-                                                   }
+                            // notify that the database was created and it's ready to be used
+                            database.setDatabaseCreated();
+                        }
                         );
 
                     }
